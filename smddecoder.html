@@ -1,32 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-	<head>
-		<title>Расшифровка маркировки резисторов поверхностного монтажа</title>
-		<meta name="generator" content="Bluefish 2.0.1" >
-		<meta name="author" content="Бравиков Дмитрий" >
-		<meta name="date" content="2011-11-29T16:38:09+0600" >
-		<meta name="keywords" content="">
-		<meta http-equiv="content-type" content="text/html; charset=CP1251">
-		<meta http-equiv="content-style-type" content="text/css">
-	</head>
-<body>
-	<script type="text/javascript">
-		function decodeIfEnter()
-		{
-			if (event.keyCode == 13) decode()
-		}
-
-		function decode()
-		{
-			document.getElementById('result').value = document.getElementById('code').value;
-		}	
-	</script>
-	
-	<form>
-		<input type="text" id="code" onkeypress="decodeIfEnter()" />
-		<input type="button" id="decodeButton" value="Расшифровать" onclick="decode()" />
-		<input type="text" id="result"/>
-	</form>
-
+     <head>
+          <title>Расшифровка маркировки резисторов поверхностного монтажа</title>
+          <meta name="author" content="Бравиков Дмитрий" >
+          <meta name="date" content="2011-11-29T16:38:09+0600" >
+          <meta name="keywords" content="">
+          <meta http-equiv="content-type" content="text/html; charset=CP1251">
+          <meta http-equiv="content-style-type" content="text/css">
+          <script type="text/javascript" src="smddecoder.js"></script>
+          <link rel="stylesheet" type="text/css" href="smddecoder.css">
+     </head>
+<body onload="document.getElementById('marking').focus()">
+	<p><a id="smddechelp" href="#" onclick="help()">Справка</a></p>
+	<p><form>
+          <input type="text" id="marking" onkeypress="javascript: if(event.keyCode == 13) {decode(); return false;}" />
+          <input type="button" id="decodeButton" value="Расшифровать" onclick="decode()" />
+	</form></p>
+	<p><div id="resultArea"></div></p>
 </body>
 </html>

@@ -1,0 +1,5 @@
+#smddechelp
+{
+     text-decoration: none; /* Убираем подчеркивание */
+     border-bottom: 1px dashed #000080; /* Добавляем свою линию */
+}
