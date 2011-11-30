@@ -6,7 +6,11 @@ function decode()
 
 function help()
 {
-     document.getElementById('resultArea').innerHTML = "Расшифровщик маркировок резисторов"
-                                                       "поверхностного монтажа";
+     helpString = "Расшифровщик маркировок резисторов."
+     helpString += "<br>Примеры маркировок:<ul>"
+     helpString += "<li>123 (12 кОм)</li>"
+     helpString += "<li>1212 (12,1 кОм, тосность 1%)</li></ul>";
+     
+     document.getElementById('resultArea').innerHTML = helpString;                                         
      document.getElementById('marking').focus();
 }
