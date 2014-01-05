@@ -61,13 +61,13 @@ function decode()
                         resistance = temp;
                 }
                 
-                var prefixs = ["", "к", "М", "Г"];
+                var prefixs = ["", "Рє", "Рњ", "Р“"];
                 
-                decodeStr = resistance + " " + prefixs[prefixIndex] + "Ом";
+                decodeStr = resistance + " " + prefixs[prefixIndex] + "РћРј";
                 break;
      }
         if (decodeStr == undefined)
-                decodeStr = "Не удалось распознать маркировку";
+                decodeStr = "РќРµ СѓРґР°Р»РѕСЃСЊ СЂР°СЃРїРѕР·РЅР°С‚СЊ РјР°СЂРєРёСЂРѕРІРєСѓ";
         
         document.getElementById('resultArea').innerHTML = decodeStr;
         document.getElementById('marking').focus();
@@ -75,16 +75,16 @@ function decode()
 
 function help()
 {
-     helpString = 'Расшифровщик маркировок <a href="http://ru.wikipedia.org/wiki/Резистор">резисторов</a> поверхностного монтажа.'
-     helpString += "<br>Введите маркировку в единсвенное поле ввода на странице и нажмите Enter."
-     helpString += "<br>Примеры маркировок:<ul>"
-     helpString += "<li>123 (12 кОм)</li>"
-     helpString += "<li>1212 (12,1 кОм)</li>"
-     helpString += "<li>80E (6,65 МОм)</li>"
-     helpString += "<li>D60 (820 кОм)</li>"
+     helpString = 'Р Р°СЃС€РёС„СЂРѕРІС‰РёРє РјР°СЂРєРёСЂРѕРІРѕРє <a href="http://ru.wikipedia.org/wiki/Р РµР·РёСЃС‚РѕСЂ">СЂРµР·РёСЃС‚РѕСЂРѕРІ</a> РїРѕРІРµСЂС…РЅРѕСЃС‚РЅРѕРіРѕ РјРѕРЅС‚Р°Р¶Р°.'
+     helpString += "<br>Р’РІРµРґРёС‚Рµ РјР°СЂРєРёСЂРѕРІРєСѓ РІ РµРґРёРЅСЃРІРµРЅРЅРѕРµ РїРѕР»Рµ РІРІРѕРґР° РЅР° СЃС‚СЂР°РЅРёС†Рµ Рё РЅР°Р¶РјРёС‚Рµ Enter."
+     helpString += "<br>РџСЂРёРјРµСЂС‹ РјР°СЂРєРёСЂРѕРІРѕРє:<ul>"
+     helpString += "<li>123 (12 РєРћРј)</li>"
+     helpString += "<li>1212 (12,1 РєРћРј)</li>"
+     helpString += "<li>80E (6,65 РњРћРј)</li>"
+     helpString += "<li>D60 (820 РєРћРј)</li>"
      helpString += "</ul>"
-     helpString += 'Сайт разработки: <a href="http://github.com/bravikov/SMDdecoder">http://github.com/bravikov/SMDdecoder</a>';
-     helpString += '<br>Автор: bravikov@gmail.com'
+     helpString += 'РЎР°Р№С‚ СЂР°Р·СЂР°Р±РѕС‚РєРё: <a href="http://github.com/bravikov/SMDdecoder">http://github.com/bravikov/SMDdecoder</a>';
+     helpString += '<br>РђРІС‚РѕСЂ: bravikov@gmail.com'
      
      document.getElementById('resultArea').innerHTML = helpString;                                     
      document.getElementById('marking').focus();
