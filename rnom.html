@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Электротехнический калькулятор: рассчет номинального сопротивления</title>
+</head>
+<body>
+    <script type="text/javascript" src="ecalc.js"></script>
+    <script type="text/javascript">
+        function calculate()
+        {
+            var result = document.getElementsByName('resultTag')[0];
+            var u = +document.getElementsByName('voltageTag')[0].value;
+            var i = +document.getElementsByName('currentTag')[0].value;
+            var constant = document.getElementsByName('constant');
+            var eSeriesSelecter = document.getElementById('eSeriesSelecter');
+
+            var eSeriesSize = parseInt(
+                  eSeriesSelecter.options[eSeriesSelecter.selectedIndex].value
+            );
+
+            var uIsConstant = constant[0].checked;
+            var iIsConstant = constant[1].checked;
+
+            if (isNaN(u) || isNaN(i)) {
+                result.innerHTML = "Введены недопустимые параметры.";
+                return;
+            }
+
+            var puir = solvePUIR("u", u, "i", i);
+
+            var Rnom = getNeighboringNominalValues(eSeriesSize, puir.r);
+
+            if (uIsConstant) {
+                var puirNom1 = solvePUIR("r", Rnom[0], "u", u);
+                var puirNom2 = solvePUIR("r", Rnom[1], "u", u);
+            }
+
+            if (iIsConstant) {
+                var puirNom1 = solvePUIR("r", Rnom[0], "i", i);
+                var puirNom2 = solvePUIR("r", Rnom[1], "i", i);
+            }
+
+            var R = getNumberInEngineeringNotation(puir.r);
+            var P = getNumberInEngineeringNotation(puir.p);
+
+            var Pnom1 = getNumberInEngineeringNotation(puirNom1.p);
+            var Unom1 = getNumberInEngineeringNotation(puirNom1.u);
+            var Inom1 = getNumberInEngineeringNotation(puirNom1.i);
+            var Rnom1 = getNumberInEngineeringNotation(puirNom1.r);
+
+            var Pnom2 = getNumberInEngineeringNotation(puirNom2.p);
+            var Unom2 = getNumberInEngineeringNotation(puirNom2.u);
+            var Inom2 = getNumberInEngineeringNotation(puirNom2.i);
+            var Rnom2 = getNumberInEngineeringNotation(puirNom2.r);
+
+            var resultHtml = '';
+
+            resultHtml += '' +
+                'R = U / I = ' + round(R.mantissa, 3) + ' ' + getRussianMetricPrefix(R.exponent) + 'Ом' + '<br>' +
+                'P = U * I = ' + round(P.mantissa, 3) + ' ' + getRussianMetricPrefix(P.exponent) + 'Вт'+ '<br>' +
+                '<br>' +
+                'R<sub>ном1</sub> = ' + round(Rnom1.mantissa, 3) + ' ' + getRussianMetricPrefix(Rnom1.exponent) + 'Ом' + '<br>' +
+                'U<sub>ном1</sub> = ' + round(Unom1.mantissa, 3) + ' ' + getRussianMetricPrefix(Unom1.exponent) + 'В' + '<br>' +
+                'I<sub>ном1</sub> = ' + round(Inom1.mantissa, 3) + ' ' + getRussianMetricPrefix(Inom1.exponent) + 'А' + '<br>' +
+                'P<sub>ном1</sub> = ' + round(Pnom1.mantissa, 3) + ' ' + getRussianMetricPrefix(Pnom1.exponent) + 'Вт' + '<br>' +
+                '<br>' +
+                'R<sub>ном2</sub> = ' + round(Rnom2.mantissa, 3) + ' ' + getRussianMetricPrefix(Rnom2.exponent) + 'Ом' + '<br>' +
+                'U<sub>ном2</sub> = ' + round(Unom2.mantissa, 3) + ' ' + getRussianMetricPrefix(Unom2.exponent) + 'В' + '<br>' +
+                'I<sub>ном2</sub> = ' + round(Inom2.mantissa, 3) + ' ' + getRussianMetricPrefix(Inom2.exponent) + 'А' + '<br>' +
+                'P<sub>ном2</sub> = ' + round(Pnom2.mantissa, 3) + ' ' + getRussianMetricPrefix(Pnom2.exponent) + 'Вт' + '<br>' +
+                '';
+
+            result.innerHTML = resultHtml;
+        }
+    </script>
+    <p><a href="index.html">Электротехнический калькулятор</a></p>
+    <h1>Рассчет номинального сопротивления</h1>
+    <form onsubmit="calculate(); return false;">
+        <p><table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Константа</td>
+            </tr>
+            <tr>
+                <td><div style="text-align: right">U = </div></td>
+                <td><input name="voltageTag" type="text" /> В</td>
+                <td></td>
+                <td><div style="text-align: center"><input name="constant" checked="checked" type="radio" /></div></td>
+            </tr>
+            <tr>
+                <td><div style="text-align: right">I = </div></td>
+                <td><input name="currentTag" type="text" /> А</td>
+                <td></td>
+                <td><div style="text-align: center"><input name="constant" type="radio" /></div></td>
+            </tr>
+            <tr>
+                <td>R<sub>ном</sub> из ряда</td>
+                <td>
+                    <select id="eSeriesSelecter">
+                        <option value="6">E6</option>
+                        <option value="12">E12</option>
+                        <option value="24" selected>E24</option>
+                        <option value="48">E48</option>
+                        <option value="96">E96</option>
+                        <option value="192">E192</option>
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table></p>
+        <p><input type="submit" value="Рассчитать"></p>
+    </form>
+    <p><b>Результат:</b><br>
+        <p><span name="resultTag">0</span></p>
+    </p>
+</body>
+</html>
