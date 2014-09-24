@@ -1,23 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
         <head>
-                <title>Расшифровка маркировки резисторов поверхностного монтажа</title>
-                <meta name="author" content="Дмитрий Бравиков" >
-                <meta name="date" content="2014-01-05T20:20:31+0600" >
+                <title>Электротехнический калькулятор: Расшифровка маркировки резисторов поверхностного монтажа (SMD, чип)</title>
+                <meta name="author" content="Unknown" >
+                <meta name="date" content="2014-09-24T19:53:07+0600" >
                 <meta name="keywords" content="">
                 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
                 <meta http-equiv="content-style-type" content="text/css">
                 <script type="text/javascript" src="smddecoder.js"></script>
                 <link rel="stylesheet" type="text/css" href="smddecoder.css">
         </head>
-                <body onload="document.getElementById('marking').focus()">
-                    <p><a href="index.html">Электротехнический калькулятор</a></p>
-                    <H1>Расшифровка маркировок резисторов поверхностного монтажа (SMD, чип)</H1>
+        <body onload="document.getElementById('marking').focus()">
+                <h1><a href="index.html">Электротехнический калькулятор</a></h1>
+                <h2>Расшифровка маркировок резисторов поверхностного монтажа (SMD, чип)</h2>
                 <p><a id="smddechelp" href="#" onclick="help()">Справка</a></p>
                 <p><form>
                         <input type="text" id="marking" onkeypress="javascript: if(event.keyCode == 13) {decode(); return false;}" />
                         <input type="button" id="decodeButton" value="Расшифровать" onclick="decode()" />
                 </form></p>
                 <p><div id="resultArea"></div></p>
+                <hr>
+                <p>2014, <a href="https://github.com/bravikov/web-ecalc">web-ecalc</a></p>
         </body>
 </html>

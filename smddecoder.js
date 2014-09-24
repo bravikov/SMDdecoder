@@ -83,8 +83,6 @@ function help()
      helpString += "<li>80E (6,65 МОм)</li>"
      helpString += "<li>D60 (820 кОм)</li>"
      helpString += "</ul>"
-     helpString += 'Сайт разработки: <a href="http://github.com/bravikov/SMDdecoder">http://github.com/bravikov/SMDdecoder</a>';
-     helpString += '<br>Автор: bravikov@gmail.com'
      
      document.getElementById('resultArea').innerHTML = helpString;                                     
      document.getElementById('marking').focus();
