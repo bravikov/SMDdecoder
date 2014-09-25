@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Электротехнический калькулятор: расчет проводника</title>
+</head>
+<body>
+    <script type="text/javascript" src="ecalc.js"></script>
+    <script type="text/javascript">
+        function resetConductor() {
+            document.getElementById('defaultConductor').selected = true;
+        }
+        
+        function setResistivity(value) {
+            document.getElementById('resistivity').value = value;
+        };
+        
+        function setForm(form) {
+            var c = document.getElementById('tableForCircle');
+            var r = document.getElementById('tableForRectangle');
+            
+            r.style.visibility = 'hidden';
+            c.style.visibility = 'hidden';
+            
+            if (form == 'circle') {
+                c.style.visibility = 'visible';
+            }
+            else if (form == 'rectangle') {
+                r.style.visibility = 'visible';
+            }
+        }
+        
+        function calculate() {
+            var form = document.getElementById('formSelector').value;
+            
+            if (form == 'circle') {
+                var circleRadio = document.getElementsByName('circleRadio');
+                
+                var resistivity = document.getElementById('resistivity').value;
+                var r = parseFloat(resistivity);
+                
+                if (circleRadio[0].checked) {
+                    var area = document.getElementById('areaOfCircleInput');
+                    if (!(r > 0)) {
+                        area.value = 'Недопустимое уд. сопрот.';
+                        return;
+                    }
+                    var lenghtValue =
+                        document.getElementById('lenghtInput').value;
+                    var L = parseFloat(lenghtValue);
+                    if (!(L > 0)) {
+                        area.value = 'Недопустимая длина';
+                        return;
+                    }
+                    var resistanceValue =
+                        document.getElementById('resistanceInput').value;
+                    var R = parseFloat(resistanceValue);
+                    if (!(R > 0)) {
+                        area.value = 'Недопустимое сопротив.';
+                        return;
+                    }
+                    area.value = r * L / R;
+                    calculateDiameter(area.value);
+                }
+                else if (circleRadio[1].checked) {
+                    
+                }
+                else if (circleRadio[2].checked) {
+                    
+                }
+            }
+            else if (form == 'rectangle') {
+                
+            }
+        }
+        
+        function calculateDiameter(areaOfCircle) {
+            var diameter = document.getElementById('diameterInput');
+            var s = parseFloat(areaOfCircle);
+            if (s > 0) {
+                diameter.value = 2 * Math.sqrt(s / Math.PI);
+            }
+            else {
+                diameter.value = 'Недопустимая площадь';
+            }
+        }
+        
+        function calculateAreaOfCircle(diameter) {
+            var area = document.getElementById('areaOfCircleInput');
+            var d = parseFloat(diameter);
+            if (d > 0) {
+                var r = d / 2;
+                area.value = r * r * Math.PI;
+            }
+            else {
+                area.value = 'Недопустимый диаметр';
+            }
+        }
+    </script>
+    <h1><a href="index.html">Электротехнический калькулятор</a></h1>
+    <h2>Расчет проводника</h2>
+    <p>
+        <table>
+            <tr>
+                <td></td>
+                <td>Удельное сопротивление</td>
+            </tr>
+                <td>
+                    <select onchange="setResistivity(this.value); calculate();">
+                        <option id="defaultConductor" selected disabled>
+                            Материал проводника
+                        </option>
+                        <option value="0.018">Медь</option>
+                        <option value="0.0295">Алюминий</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="resistivity" oninput="resetConductor(); calculate();">
+                    Ом·мм²/м
+                </td>
+            </tr>
+        </table>
+    </p>
+    <p>
+        <select id="formSelector" onchange="setForm(this.value)">
+            <option selected disabled>Форма сечения</option>
+            <option value="circle">Круглое сечение</option>
+            <option value="rectangle">Прямоугольное сечение</option>
+        </select>
+    </p>
+    <div style="position: relative;">
+        <table
+            id="tableForCircle"
+            style="position: absolute; border-collapse: collapse; visibility: hidden;"
+            border="1"
+            cellpadding="5">
+            
+            <thead>
+                <tr align="center">
+                    <td>Расчет</td>
+                    <td>Параметр</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <input type="radio" name="circleRadio">
+                    </td>
+                    <td>
+                        Площадь сечения (S):<br>
+                        <input
+                            id="areaOfCircleInput"
+                            oninput="calculateDiameter(this.value); calculate();">мм²<br>
+                        Диаметр сечения (D):<br>
+                        <input
+                            id="diameterInput"
+                            oninput="calculateAreaOfCircle(this.value); calculate();">мм
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <input type="radio" name="circleRadio">
+                    </td>
+                    <td>
+                        Длина проводника (L):<br>
+                        <input id="lenghtInput" oninput="calculate();">м
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <input type="radio" name="circleRadio">
+                    </td>
+                    <td>
+                        Сопротивление (R):<br>
+                        <input id="resistanceInput" oninput="calculate();">Ом
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table
+            id="tableForRectangle"
+            style="border-collapse: collapse; visibility: hidden;"
+            border="1"
+            cellpadding="5">
+            
+            <thead>
+                <tr align="center">
+                    <td>Расчет</td>
+                    <td>Параметр</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>Высота сечения (H):<br><input>мм</td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="radio" name="rectangleRadio"></td>
+                    <td>
+                        Площадь сечения (S):<br><input>мм²<br>
+                        Ширина сечения (W):<br><input>мм
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="radio" name="rectangleRadio"></td>
+                    <td>Длина проводника (L):<br><input>м</td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="radio" name="rectangleRadio"></td>
+                    <td>Сопротивление (R):<br><input>Ом</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <p>2014, <a href="https://github.com/bravikov/web-ecalc">web-ecalc</a></p>
+</body>
+</html>
