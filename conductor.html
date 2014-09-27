@@ -10,18 +10,18 @@
         function resetConductor() {
             document.getElementById('defaultConductor').selected = true;
         }
-        
+
         function setResistivity(value) {
             document.getElementById('resistivity').value = value;
         };
-        
+
         function setForm(form) {
             var c = document.getElementById('tableForCircle');
             var r = document.getElementById('tableForRectangle');
-            
+
             r.style.visibility = 'hidden';
             c.style.visibility = 'hidden';
-            
+
             if (form == 'circle') {
                 c.style.visibility = 'visible';
             }
@@ -29,51 +29,94 @@
                 r.style.visibility = 'visible';
             }
         }
-        
+
         function calculate() {
             var form = document.getElementById('formSelector').value;
-            
+
             if (form == 'circle') {
                 var circleRadio = document.getElementsByName('circleRadio');
-                
+                var calcArea = circleRadio[0].checked;
+                var calcLenght = circleRadio[1].checked;
+                var calcResistance = circleRadio[2].checked;
+
                 var resistivity = document.getElementById('resistivity').value;
                 var r = parseFloat(resistivity);
-                
-                if (circleRadio[0].checked) {
-                    var area = document.getElementById('areaOfCircleInput');
-                    if (!(r > 0)) {
-                        area.value = 'Недопустимое уд. сопрот.';
-                        return;
+
+                var areaInput = document.getElementById('areaOfCircleInput');
+                var areaValue = areaInput.value;
+                var S = parseFloat(areaValue);
+
+                var lenghtInput = document.getElementById('lenghtOfCircleInput');
+                var lenghtValue = lenghtInput.value;
+                var L = parseFloat(lenghtValue);
+
+                var resistanceInput = document.getElementById('resistanceOfCircleInput');
+                var resistanceValue = resistanceInput.value;
+                var R = parseFloat(resistanceValue);
+
+                if (!(r > 0)) {
+                    var errorStr = 'Недопустимое уд. сопрот.';
+                    if (calcArea) {
+                        areaInput.value = errorStr;
+                        calculateDiameter(areaInput.value); return;
                     }
-                    var lenghtValue =
-                        document.getElementById('lenghtInput').value;
-                    var L = parseFloat(lenghtValue);
-                    if (!(L > 0)) {
-                        area.value = 'Недопустимая длина';
-                        return;
+                    else if (calcLenght) {
+                        lenghtInput.value = errorStr; return;
                     }
-                    var resistanceValue =
-                        document.getElementById('resistanceInput').value;
-                    var R = parseFloat(resistanceValue);
-                    if (!(R > 0)) {
-                        area.value = 'Недопустимое сопротив.';
-                        return;
+                    else if (calcResistance) {
+                        resistanceInput.value = errorStr; return;
                     }
-                    area.value = r * L / R;
-                    calculateDiameter(area.value);
-                }
-                else if (circleRadio[1].checked) {
                     
                 }
-                else if (circleRadio[2].checked) {
-                    
+
+                if (!(S > 0)) {
+                    var errorStr = 'Недопустимая площадь';
+                    if (calcLenght) {
+                        lenghtInput.value = errorStr; return;
+                    }
+                    else if (calcResistance) {
+                        resistanceInput.value = errorStr; return;
+                    }
+                }
+
+                if (!(L > 0)) {
+                    var errorStr = 'Недопустимая длина';
+                    if (calcArea) {
+                        areaInput.value = errorStr;
+                        calculateDiameter(areaInput.value); return;
+                    }
+                    else if (calcResistance) {
+                        resistanceInput.value = errorStr; return;
+                    }
+                }
+
+                if (!(R > 0)) {
+                    var errorStr = 'Недопустимое сопротив.';
+                    if (calcArea) {
+                        areaInput.value = errorStr;
+                        calculateDiameter(areaInput.value); return;
+                    }
+                    else if (calcLenght) {
+                        lenghtInput.value = errorStr; return;
+                    }
+                }
+
+                if (calcArea) {
+                    areaInput.value = r * L / R;
+                    calculateDiameter(areaInput.value);
+                }
+                else if (calcLenght) {
+                    lenghtInput.value = R * S / r;
+                }
+                else if (calcResistance) {
+                    resistanceInput.value = r * L / S;
                 }
             }
             else if (form == 'rectangle') {
-                
+
             }
         }
-        
+
         function calculateDiameter(areaOfCircle) {
             var diameter = document.getElementById('diameterInput');
             var s = parseFloat(areaOfCircle);
@@ -84,7 +127,7 @@
                 diameter.value = 'Недопустимая площадь';
             }
         }
-        
+
         function calculateAreaOfCircle(diameter) {
             var area = document.getElementById('areaOfCircleInput');
             var d = parseFloat(diameter);
@@ -163,7 +206,7 @@
                     </td>
                     <td>
                         Длина проводника (L):<br>
-                        <input id="lenghtInput" oninput="calculate();">м
+                        <input id="lenghtOfCircleInput" oninput="calculate();">м
                     </td>
                 </tr>
                 <tr>
@@ -172,7 +215,7 @@
                     </td>
                     <td>
                         Сопротивление (R):<br>
-                        <input id="resistanceInput" oninput="calculate();">Ом
+                        <input id="resistanceOfCircleInput" oninput="calculate();">Ом
                     </td>
                 </tr>
             </tbody>
