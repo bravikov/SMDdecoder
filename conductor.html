@@ -28,19 +28,21 @@
             else if (form == 'rectangle') {
                 r.style.visibility = 'visible';
             }
+
+            calculate();
         }
 
         function calculate() {
             var form = document.getElementById('formSelector').value;
+
+            var resistivity = document.getElementById('resistivity').value;
+            var r = parseFloat(resistivity);
 
             if (form == 'circle') {
                 var circleRadio = document.getElementsByName('circleRadio');
                 var calcArea = circleRadio[0].checked;
                 var calcLenght = circleRadio[1].checked;
                 var calcResistance = circleRadio[2].checked;
-
-                var resistivity = document.getElementById('resistivity').value;
-                var r = parseFloat(resistivity);
 
                 var areaInput = document.getElementById('areaOfCircleInput');
                 var areaValue = areaInput.value;
@@ -66,7 +68,6 @@
                     else if (calcResistance) {
                         resistanceInput.value = errorStr; return;
                     }
-                    
                 }
 
                 if (!(S > 0)) {
@@ -113,7 +114,8 @@
                 }
             }
             else if (form == 'rectangle') {
-
+                var height = document.getElementById('heightOfRectInput').value;
+                var H = parseFloat(height);
             }
         }
 
@@ -138,6 +140,59 @@
             else {
                 area.value = 'Недопустимый диаметр';
             }
+        }
+
+        var lastRectInput = '';
+
+        function calculateRectFromHeight() {
+            if (lastRectInput == 'area') {
+                var areaValue = document.getElementById('areaOfRectInput').value;
+                calculateWidthOfRectangle(areaValue);
+                lastRectInput = 'area'
+            }
+            else if (lastRectInput == 'width') {
+                var widthValue = document.getElementById('widthOfRectInput').value;
+                calculateAreaOfRectangle(widthValue);
+                lastRectInput = 'width';
+            }
+        }
+
+        function calculateWidthOfRectangle(area) {
+            var heightInput = document.getElementById('heightOfRectInput').value;
+            var H = parseFloat(heightInput);
+            var S = parseFloat(area);
+            var width = document.getElementById('widthOfRectInput');
+            if (H > 0) {
+                if (S > 0) {
+                    width.value = S / H;
+                }
+                else {
+                    width.value = 'Недопустимая площадь';
+                }
+            }
+            else {
+                width.value = 'Недопустимая высота';
+            }
+            lastRectInput = 'area';
+        }
+
+        function calculateAreaOfRectangle(width) {
+            var heightInput = document.getElementById('heightOfRectInput').value;
+            var H = parseFloat(heightInput);
+            var W = parseFloat(width);
+            var area = document.getElementById('areaOfRectInput');
+            if (H > 0) {
+                if (W > 0) {
+                    area.value = H * W;
+                }
+                else {
+                    area.value = 'Недопустимая ширина';
+                }
+            }
+            else {
+                area.value = 'Недопустимая высота';
+            }
+            lastRectInput = 'width';
         }
     </script>
     <h1><a href="index.html">Электротехнический калькулятор</a></h1>
@@ -235,22 +290,32 @@
             <tbody>
                 <tr>
                     <td></td>
-                    <td>Высота сечения (H):<br><input>мм</td>
-                </tr>
-                <tr>
-                    <td align="center"><input type="radio" name="rectangleRadio"></td>
                     <td>
-                        Площадь сечения (S):<br><input>мм²<br>
-                        Ширина сечения (W):<br><input>мм
+                        Высота сечения (H):<br>
+                        <input id="heightOfRectInput" oninput="calculateRectFromHeight(); calculate();">мм
                     </td>
                 </tr>
                 <tr>
                     <td align="center"><input type="radio" name="rectangleRadio"></td>
-                    <td>Длина проводника (L):<br><input>м</td>
+                    <td>
+                        Площадь сечения (S):<br>
+                        <input id="areaOfRectInput" oninput="calculateWidthOfRectangle(this.value); calculate();">мм²<br>
+                        Ширина сечения (W):<br>
+                        <input id="widthOfRectInput" oninput="calculateAreaOfRectangle(this.value); calculate();">мм
+                    </td>
                 </tr>
                 <tr>
                     <td align="center"><input type="radio" name="rectangleRadio"></td>
-                    <td>Сопротивление (R):<br><input>Ом</td>
+                    <td>
+                        Длина проводника (L):<br>
+                        <input id="lenghtOfRectInput" oninput="calculate();">м
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="radio" name="rectangleRadio"></td>
+                    <td>Сопротивление (R):<br>
+                        <input id="resistanceOfRectInput" oninput="calculate();">Ом
+                    </td>
                 </tr>
             </tbody>
         </table>
