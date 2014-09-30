@@ -45,38 +45,40 @@
                 var calcResistance = circleRadio[2].checked;
 
                 var areaInput = document.getElementById('areaOfCircleInput');
-                var areaValue = areaInput.value;
-                var S = parseFloat(areaValue);
+                var S = parseFloat(areaInput.value);
 
                 var lenghtInput = document.getElementById('lenghtOfCircleInput');
-                var lenghtValue = lenghtInput.value;
-                var L = parseFloat(lenghtValue);
+                var L = parseFloat(lenghtInput.value);
 
                 var resistanceInput = document.getElementById('resistanceOfCircleInput');
-                var resistanceValue = resistanceInput.value;
-                var R = parseFloat(resistanceValue);
+                var R = parseFloat(resistanceInput.value);
 
                 if (!(r > 0)) {
                     var errorStr = 'Недопустимое уд. сопрот.';
                     if (calcArea) {
                         areaInput.value = errorStr;
-                        calculateDiameter(areaInput.value); return;
+                        calculateDiameter(areaInput.value);
+                        return;
                     }
                     else if (calcLenght) {
-                        lenghtInput.value = errorStr; return;
+                        lenghtInput.value = errorStr;
+                        return;
                     }
                     else if (calcResistance) {
-                        resistanceInput.value = errorStr; return;
+                        resistanceInput.value = errorStr;
+                        return;
                     }
                 }
 
                 if (!(S > 0)) {
                     var errorStr = 'Недопустимая площадь';
                     if (calcLenght) {
-                        lenghtInput.value = errorStr; return;
+                        lenghtInput.value = errorStr;
+                        return;
                     }
                     else if (calcResistance) {
-                        resistanceInput.value = errorStr; return;
+                        resistanceInput.value = errorStr;
+                        return;
                     }
                 }
 
@@ -84,10 +86,12 @@
                     var errorStr = 'Недопустимая длина';
                     if (calcArea) {
                         areaInput.value = errorStr;
-                        calculateDiameter(areaInput.value); return;
+                        calculateDiameter(areaInput.value);
+                        return;
                     }
                     else if (calcResistance) {
-                        resistanceInput.value = errorStr; return;
+                        resistanceInput.value = errorStr;
+                        return;
                     }
                 }
 
@@ -95,10 +99,12 @@
                     var errorStr = 'Недопустимое сопротив.';
                     if (calcArea) {
                         areaInput.value = errorStr;
-                        calculateDiameter(areaInput.value); return;
+                        calculateDiameter(areaInput.value);
+                        return;
                     }
                     else if (calcLenght) {
-                        lenghtInput.value = errorStr; return;
+                        lenghtInput.value = errorStr;
+                        return;
                     }
                 }
 
@@ -114,8 +120,107 @@
                 }
             }
             else if (form == 'rectangle') {
-                var height = document.getElementById('heightOfRectInput').value;
-                var H = parseFloat(height);
+                var rectangleRadio = document.getElementsByName('rectangleRadio');
+                var calcArea = rectangleRadio[0].checked;
+                var calcLenght = rectangleRadio[1].checked;
+                var calcResistance = rectangleRadio[2].checked;
+                
+                var height = document.getElementById('heightOfRectInput');
+                var H = parseFloat(height.value);
+
+                var widthInput = document.getElementById('widthOfRectInput');
+                var W = parseFloat(widthInput.value);
+
+                var areaInput = document.getElementById('areaOfRectInput');
+                var S = parseFloat(areaInput.value);
+
+                var lenghtInput = document.getElementById('lenghtOfRectInput');
+                var L = parseFloat(lenghtInput.value);
+
+                var resistanceInput = document.getElementById('resistanceOfRectInput');
+                var R = parseFloat(resistanceInput.value);
+
+                if (!(r > 0)) {
+                    var errorStr = 'Недопустимое уд. сопрот.';
+                    if (calcArea) {
+                        areaInput.value = errorStr;
+                        widthInput.value = errorStr;
+                        return;
+                    }
+                    else if (calcLenght) {
+                        lenghtInput.value = errorStr;
+                        return;
+                    }
+                    else if (calcResistance) {
+                        resistanceInput.value = errorStr;
+                        return;
+                    }
+                }
+
+                if (!(H > 0)) {
+                    var errorStr = 'Недопустимая высота';
+                    if (calcArea) {
+                        areaInput.value = errorStr;
+                        widthInput.value = errorStr;
+                        return;
+                    }
+                    else if (calcLenght) {
+                        lenghtInput.value = errorStr;
+                        return;
+                    }
+                    else if (calcResistance) {
+                        resistanceInput.value = errorStr;
+                        return;
+                    }
+                }
+                if (!(S > 0)) {
+                    var errorStr = 'Недопустимая площадь';
+                    if (calcLenght) {
+                        lenghtInput.value = errorStr;
+                        return;
+                    }
+                    else if (calcResistance) {
+                        resistanceInput.value = errorStr;
+                        return;
+                    }
+                }
+
+                if (!(L > 0)) {
+                    var errorStr = 'Недопустимая длина';
+                    if (calcArea) {
+                        areaInput.value = errorStr;
+                        widthInput.value = errorStr;
+                        return;
+                    }
+                    else if (calcResistance) {
+                        resistanceInput.value = errorStr;
+                        return;
+                    }
+                }
+
+                if (!(R > 0)) {
+                    var errorStr = 'Недопустимое сопротив.';
+                    if (calcArea) {
+                        areaInput.value = errorStr;
+                        widthInput.value = errorStr;
+                        return;
+                    }
+                    else if (calcLenght) {
+                        lenghtInput.value = errorStr;
+                        return;
+                    }
+                }
+
+                if (calcArea) {
+                    areaInput.value = r * L / R;
+                    widthInput.value = areaInput.value / H;
+                }
+                else if (calcLenght) {
+                    lenghtInput.value = R * S / r;
+                }
+                else if (calcResistance) {
+                    resistanceInput.value = r * L / S;
+                }
             }
         }
 
